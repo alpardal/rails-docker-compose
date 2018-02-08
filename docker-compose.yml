@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   db:
-    image: postgres
+    image: postgres:10
 
   web:
     build: .
@@ -9,9 +9,13 @@ services:
       - type: bind
         source: .
         target: /app
+      - bundle_cache:/bundle
     ports:
       - "3000:3000"
     depends_on:
       - db
     command:
-      - ./run.sh
+      - ./run-from-container.sh
+
+volumes:
+  bundle_cache:
